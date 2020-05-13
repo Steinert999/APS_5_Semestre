@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "API designated for informaation on coronavirus status in SC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Steinert999/APS_5_Semestre.git"
+  },
+  "author": "Guilherme Steinert de Azevedo and Vitor Lavarda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Steinert999/APS_5_Semestre/issues"
+  },
+  "homepage": "https://github.com/Steinert999/APS_5_Semestre#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.9.14"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.3"
+  }
+}
