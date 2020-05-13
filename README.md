@@ -4,5 +4,4 @@
 * Mongodb
 * Express
 
-**Deploy**
-*Url da aplicação no Heroku
+**Deploy** Url da aplicação no Heroku
