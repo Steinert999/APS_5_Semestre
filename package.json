@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "API designated for informaation on coronavirus status in SC",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon src/app.js"
   },
