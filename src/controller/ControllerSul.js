@@ -1,44 +1,23 @@
-const api = require('./src/services/connections')
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const api = require('../services/connections')
+const DataSul = require('../models/DataSul')
 
 module.exports = {
-    async getData() {
-        api.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalSintese').then( (res) => {
-            if ( res ) { 
-                this.formatData(res)
+    async getData(req,res) {
+        api.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalSintese').then( (r) => {
+            if ( r ) { 
+                let obj_formated = {}
+                r.data.forEach( (v) => {
+                    if (v._id == 'Sul') {
+                        obj_formated.state = v._id
+                        obj_formated.casosAcumulados = v.casosAcumulado
+                        obj_formated.obitosAcumulados = v.obitosAcumulado
+                        obj_formated.listaCasos = v.listaConfirmados
+                    }
+                })
+                let dados = new DataSul(obj_formated)
+                dados.save()
+                return res.json(obj_formated);
             }
         })
-    },
-    async formatData(data) {
-        let data = data.map( (v,i) => {
-            return v._id == 'Sul'
-        })
-        let dados_mock = {
-            _id: 'Sul',
-            casosAcumulado: 10615,
-            obitosAcumulado: 336,
-            listaConfirmados: [
-                {
-                    casosAcumulado: 3695,
-                    obitosAcumulado: 132,
-                    _id: "RS",
-                },
-                {
-                    casosAcumulado: 4678,
-                    obitosAcumulado: 81,
-                    _id: "SC",
-                },
-                {
-                    casosAcumulado: 2242,
-                    obitosAcumulado: 123,
-                    _id: "PR",
-                },
-            ]
-        },
-        this.saveData(data)
-    },
-    async saveData(data) {
-        
     },
 }

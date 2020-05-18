@@ -1,31 +1,25 @@
-const api = require('./src/services/connections')
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const api = require('../services/connections')
+const DataStates = require('../models/DataStates')
 
 module.exports = {
     async getData(req, res) {
         api.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado').then( (res) => {
             if ( res ) { 
-                this.formatData(res, req.params.estado)
+                let obj_formated = {}
+                res.data.forEach( (v,i) => {
+                    if ( v._id == req.params.estado ) {
+                        obj_formated.state = v.nome
+                        obj_formated.casosAcumulados = v.casosAcumulado
+                        obj_formated.obitosAcumulado = v.obitosAcumulado
+                        obj_formated.incidencia = v.incidencia
+                        obj_formated.incidenciaObito = v.incidenciaObito
+                    } 
+                })
+                let dados = new DataStates(obj_formated)
+                dados.save()
+                return res.json(obj_formated);
             }
         })
 
-    },
-    async formatData(data, state) {
-        let data = data.map( (v,i) => {
-            return v._id == state
-        })
-        let dados_mock = {
-            casosAcumulado:61183,
-            incidencia:"133,2",
-            incidenciaObito:"10,2",  
-            nome:"SP",
-            obitosAcumulado:4688,
-            populacaoTCU2019:"45919049",
-            _id:"SP",
-        }
-    },
-    async saveData(data) {
-        
     },
 }

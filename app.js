@@ -6,8 +6,9 @@ const app = express();
 const bodyParser = require('body-parser')
 const cors = require('cors');
 
-mongoose.connect('mongodb+srv://login:senhacluster?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://Lavarda:VI2107vivi@@aps-5-semestre-g6df3.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true,
+    useUnifiedTopology: true 
 });
 
 // Modelo requisições 
@@ -17,17 +18,6 @@ app.use(cors());
 app.get('/', (req,res) => {
      res.json('Entrou')
 })
-
-/**
- app.get('/geral', (req,res) => {
-        res.json(cities)
-})
-    
-let state = ''
-app.get(`/estado`, (req,res) => {
-    res.json(state)
-})
- */
 
 app.use(require('./src/routes'))
 
