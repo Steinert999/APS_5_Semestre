@@ -2,7 +2,7 @@ const api = require('../services/connections')
 const DataSul = require('../models/DataSul')
 
 module.exports = {
-    async getData(req,res) {
+    async getData(req,res, next) {
         api.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalSintese').then( (r) => {
             if ( r ) { 
                 let obj_formated = {}

@@ -1,22 +1,18 @@
 // imports
-const mongoose = require('mongoose');
 const express = require("express");
 const port = 8080;
 const app = express();
 const bodyParser = require('body-parser')
 const cors = require('cors');
+const db = require('./src/services/connect-db')
 
-mongoose.connect('mongodb+srv://Lavarda:VI2107vivi@@aps-5-semestre-g6df3.mongodb.net/test?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true 
-});
-
-// Modelo requisições 
+db.connect()
 app.use(bodyParser.json())
 app.use(cors());
+app.use(express.json())
 
 app.get('/', (req,res) => {
-     res.json('Entrou')
+    res.json('Entrou')
 })
 
 app.use(require('./src/routes'))

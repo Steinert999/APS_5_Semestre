@@ -2,11 +2,11 @@ const api = require('../services/connections')
 const DataStates = require('../models/DataStates')
 
 module.exports = {
-    async getData(req, res) {
-        api.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado').then( (res) => {
-            if ( res ) { 
+    async getData(req, res, next) {
+        api.get('https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado').then( (r) => {
+            if ( r ) { 
                 let obj_formated = {}
-                res.data.forEach( (v,i) => {
+                r.data.forEach( (v,i) => {
                     if ( v._id == req.params.estado ) {
                         obj_formated.state = v.nome
                         obj_formated.casosAcumulados = v.casosAcumulado
