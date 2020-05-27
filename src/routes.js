@@ -10,7 +10,7 @@ const routes = new expres.Router();
 routes.get('/users', ControllerLogin.all_users)
 routes.post('/cadastro', ControllerLogin.create)
 routes.get('/confirmados', ControllerConfirmed.getData);
-routes.get('/estado/:estado', ControllerStates.getData);
-routes.get('/sul', ControllerSul.getData);
+routes.get('/estado/:estado', ControllerStates.getStatesData);
+routes.get('/sul', ControllerSul.getSouthData);
 
 module.exports = routes;
