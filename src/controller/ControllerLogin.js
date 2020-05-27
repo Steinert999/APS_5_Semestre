@@ -1,4 +1,4 @@
-const api = require('../services/connections')
+const api = require('../config/connections')
 const DataLogin = require('../models/DataLogin')
 const DataConfirmed = require('../models/DataConfirmed')
 
