@@ -5,22 +5,21 @@ const DataConfirmed = require('../models/DataConfirmed');
 const DataSul = require('../models/DataSul');
 const DataStates = require('../models/DataStates');
 
-const getData = (req, res, next) => api.get(`${DATA_URL}/prod/PortalGeralApi`)
-.then((r) => {
-    if ( r ) { 
-        console.log("RES", r.data)
+const getData = async (req, res, next) => { 
+    const r = await api.get(`${DATA_URL}/prod/PortalGeralApi`)
+    if ( r ) {
         let obj_formated = {}
         obj_formated.confirmados = r.data.confirmados
         obj_formated.obitos = r.data.obitos
         obj_formated.dt_updated = r.data.dt_updated
         let dados = new DataConfirmed(obj_formated)
-        dados.save()
+        await dados.save()
         return res.json(obj_formated);
     }
-});
+}
 
-const getSouthData = (req, res, next) => api.get(`${DATA_URL}/prod/PortalSintese`)
-.then((r) => {
+const getSouthData = async (req, res, next) => { 
+    const r = await api.get(`${DATA_URL}/prod/PortalSintese`)
     if ( r ) { 
         let obj_formated = {}
         r.data.forEach( (v) => {
@@ -32,17 +31,17 @@ const getSouthData = (req, res, next) => api.get(`${DATA_URL}/prod/PortalSintese
             }
         })
         let dados = new DataSul(obj_formated)
-        dados.save()
+        await dados.save()
         return res.json(obj_formated);
     }
-});
+}
 
-const getStatesData = (req, res, next) =>  api.get(`${DATA_URL}/prod/PortalEstado`)
-.then((r) => {
+const getStatesData = async (req, res, next) =>  {
+    const r = await api.get(`${DATA_URL}/prod/PortalEstado`)
     if ( r ) { 
         let obj_formated = {}
         r.data.forEach( (v,i) => {
-            if ( v._id == req.params.estado ) {
+            if ( v._id == req.headers.estados ) {
                 obj_formated.state = v.nome
                 obj_formated.casosAcumulados = v.casosAcumulado
                 obj_formated.obitosAcumulado = v.obitosAcumulado
@@ -51,10 +50,10 @@ const getStatesData = (req, res, next) =>  api.get(`${DATA_URL}/prod/PortalEstad
             } 
         })
         let dados = new DataStates(obj_formated)
-        dados.save()
+        await dados.save()
         return res.json(obj_formated);
     }
-});
+}
 
 module.exports = {
     getData,

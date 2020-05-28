@@ -1,31 +1,48 @@
-const api = require('../config/connections')
 const DataLogin = require('../models/DataLogin')
-const DataConfirmed = require('../models/DataConfirmed')
 
-exports.create = async (req, res) => {
+const registerUser = async (req,res,next) => {
     let user = new DataLogin({ email: req.headers.email, password: req.headers.password })
-    console.log("NEW USER", user)
     await user.save()
-
+    console.log("NEW USER", user)
     res.status(200).send({
-        message: "Usuario cadastrado"
+        message: "Usuário cadastrado",
+        login: req.headers.email,
     })
 }
 
-exports.authenticate = async (req, res) => {
+const login = async (req,res,next)  => {
     const r = await DataLogin.find({
-        email: req.body.email,
-        password: req.body.password,
-    })
+        email: req.headers.email,
+        password: req.headers.password,
+    }).lean()
 
-    return res
+    console.log("USUARIO ENCONTRADO", r, req.headers)
+
+    if ( r.length ) {
+        res.status(200).send({
+            message: `Você está logado como ${req.headers.email}`,
+        })
+    } else {
+        res.status(404).send({
+            message: `O Usuário ${req.headers.email} não foi encontrado`,
+        })
+    }
 }
 
-exports.all_users = async (req,res,next) => {
-    const users = DataLogin.find({
-        email: 'vitor',
-        password: 'teste',
-    }).lean()
+const allUsers = async (req,res,next) => {
+    let users = await DataLogin.find({}).lean()
     console.log("USERS", users)
-    return res.json()
+    users = users.map( (v,i) => {
+        return v.email
+    })
+    res.status(200).send({
+        message: "Usuários encontrados",
+        value: JSON.stringify(users),
+    })
+}
+
+module.exports = {
+    registerUser,
+    login,
+    allUsers,
 }
