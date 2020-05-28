@@ -5,7 +5,7 @@ const DataConfirmed = require('../models/DataConfirmed');
 const DataSul = require('../models/DataSul');
 const DataStates = require('../models/DataStates');
 
-const getData = () => api.get(`${DATA_URL}/prod/PortalGeralApi`)
+const getData = (req, res, next) => api.get(`${DATA_URL}/prod/PortalGeralApi`)
 .then((r) => {
     if ( r ) { 
         console.log("RES", r.data)
@@ -19,7 +19,7 @@ const getData = () => api.get(`${DATA_URL}/prod/PortalGeralApi`)
     }
 });
 
-const getSouthData = () => api.get(`${DATA_URL}/prod/PortalSintese`)
+const getSouthData = (req, res, next) => api.get(`${DATA_URL}/prod/PortalSintese`)
 .then((r) => {
     if ( r ) { 
         let obj_formated = {}
@@ -37,7 +37,7 @@ const getSouthData = () => api.get(`${DATA_URL}/prod/PortalSintese`)
     }
 });
 
-const getStatesData = () =>  api.get(`${DATA_URL}/prod/PortalEstado`)
+const getStatesData = (req, res, next) =>  api.get(`${DATA_URL}/prod/PortalEstado`)
 .then((r) => {
     if ( r ) { 
         let obj_formated = {}
