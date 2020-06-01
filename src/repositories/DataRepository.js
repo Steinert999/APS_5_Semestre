@@ -8,7 +8,6 @@ const DataStates = require('../models/DataStates');
 const getData = (req, res, next) => api.get(`${DATA_URL}/prod/PortalGeralApi`)
 .then((r) => {
     if ( r ) { 
-        console.log("RES", r.data)
         let obj_formated = {}
         obj_formated.confirmados = r.data.confirmados
         obj_formated.obitos = r.data.obitos
