@@ -3,6 +3,7 @@ const ControllerConfirmed = require('./controller/ControllerConfirmed')
 const ControllerStates = require('./controller/ControllerStates')
 const ControllerSul = require('./controller/ControllerSul')
 const ControllerLogin = require('./controller/ControllerLogin')
+const ControllerSheet = require('./controller/ControllerSheet');
 
 const routes = new expres.Router();
 
@@ -13,5 +14,6 @@ routes.get('/users', ControllerLogin.allUsers)
 routes.get('/confirmados', ControllerConfirmed.getData);
 routes.post('/estado', ControllerStates.getStatesData);
 routes.get('/sul', ControllerSul.getSouthData);
+routes.get('/sheet', ControllerSheet.getSheetData);
 
 module.exports = routes;
